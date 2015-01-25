@@ -1,5 +1,7 @@
-function elt(tagName) {
-	var it = document.createElement(tagName)
+function elt(it) {
+	if (typeof it == 'string') {
+		it = document.createElement(it)
+	}
 	return {
 		set: function(key, val) {
 			if (val) {
@@ -7,7 +9,7 @@ function elt(tagName) {
 			}
 		},
 		push: function(x) {
-			if (x.self().blur) {
+			if (x.self && x.self().blur) {
 				return it.appendChild(x.self())
 			}
 			else {
@@ -21,4 +23,11 @@ function elt(tagName) {
 			return it.innerHTML
 		}
 	}
+}
+
+elt.get = function(selector) {
+	var f = selector[0] == '#'? 'getElementById' :
+			selector[0] == '.'? 'getElementsByClassName' :
+			'getElementsByTagName'
+	return document[f](selector)
 }
