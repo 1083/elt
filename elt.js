@@ -3,9 +3,20 @@ function elt(it) {
     it = document.createElement(it)
   }
   return {
+    attributes: {},
     set: function(key, val) {
-      if (val) {
-        it.setAttribute(key, val)
+      if (typeof key == 'string') {
+        if (val) {
+          this.attributes[key] = val
+          it.setAttribute(key, val)
+        }
+      }
+      else {
+        var o = key
+        for (var i in o) {
+          this.attributes[key] = val
+          it.setAttribute(i, o[i])
+        }
       }
     },
     push: function(x) {
@@ -16,11 +27,11 @@ function elt(it) {
         it.innerHTML += x
       }
     },
-    self: function() {
-      return it
-    },
     get: function() {
       return it.innerHTML
+    },
+    self: function() {
+      return it
     }
   }
 }
