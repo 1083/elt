@@ -1,37 +1,34 @@
-function elt(it) {
-  if (typeof it == 'string') {
-    it = document.createElement(it)
+function elt(self) {
+  if (typeof self == 'string') {
+    self = document.createElement(self)
   }
   return {
+    html: (function() { return self.innerHTML })(),
     attributes: {},
+    self: self,
     set: function(key, val) {
       if (typeof key == 'string') {
-        if (val) {
-          this.attributes[key] = val
-          it.setAttribute(key, val)
-        }
+        val = val || null
+        this.attributes[key] = val
+        self.setAttribute(key, val)
       }
       else {
         var o = key
         for (var i in o) {
           this.attributes[key] = val
-          it.setAttribute(i, o[i])
+          self.setAttribute(i, o[i])
         }
       }
+      return self
     },
     push: function(x) {
-      if (x.self && x.self().blur) {
-        return it.appendChild(x.self())
+      if (x.self && x.self.blur) {
+        return self.appendChild(x.self)
       }
       else {
-        it.innerHTML += x
+        self.innerHTML += x
       }
-    },
-    get: function() {
-      return it.innerHTML
-    },
-    self: function() {
-      return it
+      return self
     }
   }
 }
