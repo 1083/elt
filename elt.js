@@ -1,34 +1,52 @@
 function elt(self) {
   if (typeof self == 'string') {
-    self = document.createElement(self)
+    self = document.createElement(self) // TODO new instead
   }
   return {
-    html: (function() { return self.innerHTML })(),
-    attributes: {},
-    self: self,
-    set: function(key, val) {
-      if (typeof key == 'string') {
-        val = val || null
-        this.attributes[key] = val
-        self.setAttribute(key, val)
+    attributes: {
+      '#': '',
+      '.': []
+    },
+    has: function(x) {
+      if (x[0] == '.') {
+        return self.classList.has(x.substr(1))
       }
       else {
-        var o = key
-        for (var i in o) {
-          this.attributes[key] = val
-          self.setAttribute(i, o[i])
-        }
+        return !!self.attributes[x]
       }
-      return self
     },
-    push: function(x) {
+    add: function(x) {
       if (x.self && x.self.blur) {
         return self.appendChild(x.self)
+      }
+      else if (x.constructor == Object) {
+        for (var i in x) {
+          if (i == '.') {
+            this.attributes[i].push(x[i])
+            self.classList.add(x[i])
+          }
+          else {
+            this.attributes[i] = x[i]
+            self.setAttribute(i, x[i])
+          }
+        }
       }
       else {
         self.innerHTML += x
       }
-      return self
+      return this
+    },
+    remove: function(x) {
+      if (x[0] == '.') {
+        self.classList.remove(x.substr(1))
+        var index = this.attributes['.'].indexOf(x.substr(1))
+        if (index > -1) {
+          this.attributes['.'].splice(index, 1)
+        }
+      }
+      else {
+        self.removeAttribute(x)
+      }
     }
   }
 }
