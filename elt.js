@@ -3,6 +3,7 @@ function elt(self) {
     self = document.createElement(self) // TODO new instead
   }
   return {
+    self: self,
     attributes: {
       '#': '',
       '.': []

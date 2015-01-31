@@ -1,22 +1,22 @@
 var title = elt('title')
-title.push("elt &ndash; test")
-elt(document.head).push(title)
+title.add("elt &ndash; test")
+elt(document.head).add(title)
 
 var body = elt(document.body)
 
 var h1 = elt('h1')
-h1.push("elt")
-h1.set('title', "Title")
-body.push(h1)
+h1.add("elt")
+h1.add({ title: "Title" })
+body.add(h1)
 
 var h2 = elt('h2')
-h2.push("DOM reduced to essentials.")
-h2.set({ title: "Subtitle" })
-body.push(h2)
+h2.add("DOM reduced to essentials.")
+h2.add({ title: "Subtitle" })
+body.add(h2)
 
 var div = elt('div')
-div.push("Somethings")
+div.add("Somethings")
 
 // var html = elt('code')
 // html.push(div.html)
-body.push(div)
+body.add(div)
