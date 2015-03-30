@@ -1,5 +1,9 @@
 # elt
 
+Web API experiments.
+
+## elt.js
+
 DOM reduced to essentials.
 
 ```
@@ -25,4 +29,14 @@ div.add("Somethings")
 // var html = elt('code')
 // html.push(div.html)
 body.add(div)
+```
+
+## H.js
+
+XHR + DOM.
+
+```
+H.get('http://example.com/data.json', function(data) {
+	H.post('#data', data)
+})
 ```
